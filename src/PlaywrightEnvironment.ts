@@ -8,7 +8,10 @@ import type {
   Page,
 } from 'playwright-core'
 import { Event } from 'jest-circus'
-import type { JestEnvironmentConfig } from '@jest/environment'
+import type {
+  JestEnvironmentConfig,
+  EnvironmentContext,
+} from '@jest/environment'
 import type {
   BrowserType,
   ConfigDeviceType,
@@ -115,8 +118,8 @@ export const getPlaywrightEnv = (basicEnv = 'node'): unknown => {
     readonly _config: JestPlaywrightProjectConfig
     _jestPlaywrightConfig!: JestPlaywrightConfig
 
-    constructor(config: JestEnvironmentConfig) {
-      super(config)
+    constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
+      super(config, context)
       this._config = config.projectConfig as JestPlaywrightProjectConfig
     }
 
