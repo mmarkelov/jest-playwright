@@ -7,7 +7,7 @@ import type {
   ConnectOverCDPOptions,
   Page,
 } from 'playwright-core'
-import { Event } from 'jest-circus'
+import { Event, State } from 'jest-circus'
 import type { JestEnvironmentConfig } from '@jest/environment'
 import type {
   BrowserType,
@@ -357,7 +357,10 @@ export const getPlaywrightEnv = (basicEnv = 'node'): unknown => {
       }
     }
 
-    async handleTestEvent(event: Event) {
+    async handleTestEvent(event: Event, state: State) {
+      if (super.handleTestEvent) {
+        await super.handleTestEvent(event, state)
+      }
       const { browserName } = this._config
       const { collectCoverage, haveSkippedTests } = this._jestPlaywrightConfig
       const browserType = getBrowserType(browserName)
